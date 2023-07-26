@@ -1,9 +1,6 @@
 import type { GatsbyConfig } from "gatsby"
 
-const config: GatsbyConfig = {
-  siteMetadata: {
-    siteUrl: `https:/fog-zs.github.io/speech-to-text/`,
-  },
+const config: GatsbyConfig = { 
   pathPrefix: `/speech-to-text`,
   // More easily incorporate content into your pages through automatic TypeScript type generation and better GraphQL IntelliSense.
   // If you use VSCode you can also use the GraphQL plugin

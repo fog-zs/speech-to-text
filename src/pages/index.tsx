@@ -5,6 +5,7 @@ import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
+import SEO from "../components/seo"
 
 // Light用のテーマ
 const lightTheme = createTheme();
@@ -69,6 +70,7 @@ const IndexPage: React.FC<PageProps> = () => {
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <SEO title="Speech to Text" description="音声をテキストに変換"/>
       <CssBaseline />
       <Container maxWidth="sm" sx={{ pt: 2 }}>
         <Grid container spacing={2} alignItems="center">

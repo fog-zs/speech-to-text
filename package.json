@@ -1,5 +1,6 @@
 {
     "name": "speech-to-text",
+    "homepage": "https://fog-zs.github.io/speech-to-text",
     "version": "1.1.0",
     "private": true,
     "description": "speech-to-text",
@@ -10,7 +11,7 @@
     "scripts": {
         "develop": "gatsby develop",
         "start": "gatsby develop",
-        "build": "gatsby build",
+        "build": "gatsby build --prefix-paths",
         "serve": "gatsby serve",
         "clean": "gatsby clean",
         "typecheck": "tsc --noEmit",

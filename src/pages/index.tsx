@@ -6,6 +6,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import SEO from "../components/seo"
+import { FaGithub } from 'react-icons/fa';
 
 // Light用のテーマ
 const lightTheme = createTheme();
@@ -94,6 +95,11 @@ const IndexPage: React.FC<PageProps> = () => {
           <Grid item>
             <IconButton onClick={toggleDarkMode} aria-label="Toggle dark mode">
               {darkMode ? <DarkModeIcon /> : <LightModeIcon />}
+            </IconButton>
+          </Grid>
+          <Grid item>            
+            <IconButton component="a" href="https://github.com/fog-zs/speech-to-text" aria-label="GitHub link" target="_blank" rel="noopener noreferrer">
+              <FaGithub />
             </IconButton>
           </Grid>
           <Grid item>

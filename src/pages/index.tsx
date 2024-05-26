@@ -84,9 +84,10 @@ const IndexPage: React.FC<PageProps> = () => {
                 value={lang}
                 label="Language"
                 onChange={handleChangeLang}
-              >
+              >                
                 <MenuItem value={"zh-CN"}>简体中文</MenuItem>
                 <MenuItem value={"zh-Hant-TW"}>繁體中文</MenuItem>
+                <MenuItem value={"zh-HK"}>广东话</MenuItem>
                 <MenuItem value={"en-US"}>英文</MenuItem>
                 <MenuItem value={"ja"}>日文</MenuItem>
               </Select>
@@ -118,4 +119,4 @@ const IndexPage: React.FC<PageProps> = () => {
 
 export default IndexPage
 
-export const Head: HeadFC = () => <title>Home Page</title>
+export const Head: HeadFC = () => <title>Speech to Text</title>

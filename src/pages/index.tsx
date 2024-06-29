@@ -1,6 +1,6 @@
 import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
-import { Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Switch, createTheme, ThemeProvider, Button, CssBaseline } from "@mui/material"
+import { Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Switch, createTheme, ThemeProvider, Button, CssBaseline, FormControlLabel, Checkbox } from "@mui/material"
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import Grid from '@mui/material/Grid';
@@ -23,10 +23,26 @@ const darkTheme = createTheme({
 });
 
 const IndexPage: React.FC<PageProps> = () => {
+  const [logText, setLogText] = React.useState<string>("")
   const [text, setText] = React.useState<string>("")
   const [lang, setLang] = React.useState('zh-CN')
-  const [toggle, setToggle] = React.useState(false)
+  const [toggle, setToggle] = React.useState(true)
   const [darkMode, setDarkMode] = React.useState(true);
+  const [checkboxChecked, setCheckboxChecked] = React.useState(false);
+  const textEndRef = React.useRef<HTMLDivElement | null>(null);
+  const [textLength, setTextLength] = React.useState(0);
+
+  const setResultText = (newText: string) => {
+    console.log(newText);
+    if (checkboxChecked === true) {
+      if (newText.length < textLength) {
+        setLogText(logText + text + '\n');
+      }
+      setTextLength(newText.length);
+    }
+
+    setText(newText);
+  }
 
   // ダークモード切り替え
   const toggleDarkMode = () => {
@@ -41,9 +57,23 @@ const IndexPage: React.FC<PageProps> = () => {
     setToggle(!toggle);
   };
 
+  const handleCheckboxChange = () => {
+    if (checkboxChecked === true) {
+      setLogText("");
+    }
+    setCheckboxChecked(!checkboxChecked);
+  };
+
+  // Scroll to bottom when text is updated
+  React.useEffect(() => {
+    if (textEndRef.current) {
+      textEndRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }, [text]);
+
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <SEO title="Speech to Text" description="音声をテキストに変換"/>
+      <SEO title="Speech to Text" description="音声をテキストに変換" />
       <CssBaseline />
       <Container maxWidth="sm" sx={{ pt: 2 }}>
         <Grid container spacing={2} alignItems="center">
@@ -76,15 +106,34 @@ const IndexPage: React.FC<PageProps> = () => {
             </IconButton>
           </Grid>
           <Grid item>
+            <FormControlLabel
+              control={
+                <Checkbox
+                  checked={checkboxChecked}
+                  onChange={handleCheckboxChange}
+                  name="featureCheckbox"
+                />
+              }
+              label="Log"
+            />
+          </Grid>
+          <Grid item>
             <Button onClick={handleChangeToggle} variant="contained">
               {!toggle ? '開始' : '停止'}
             </Button>
           </Grid>
           <Grid item xs={12}>
+            {/* <div style={{ height: '300px', overflow: 'auto', border: '1px solid #ccc', padding: '10px' }}>
+              {text.split('\n').map((line, index) => (
+                <div key={index}>{line}</div>
+              ))}
+              <div ref={textEndRef}></div>
+            </div> */}
+            {logText}
             {text}
           </Grid>
         </Grid>
-        <SpeechRecognitionComponent lang={lang} toggle={toggle} setText={setText} />
+        <SpeechRecognitionComponent lang={lang} toggle={toggle} setText={setResultText} />
       </Container>
     </ThemeProvider>
   )

@@ -27,7 +27,10 @@ const SpeechRecognitionComponent: React.FC<SpeechRecognitionProps> = ({ lang, to
       };
 
       recognition.onend = () => {
-        recognition.start();
+        setText(""); // 会話が止まった際にテキストをクリア
+        if (toggle) {
+          recognition.start();
+        }
       };
 
       recognition.start();

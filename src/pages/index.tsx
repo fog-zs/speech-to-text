@@ -64,12 +64,12 @@ const IndexPage: React.FC<PageProps> = () => {
     setCheckboxChecked(!checkboxChecked);
   };
 
-  // Scroll to bottom when text is updated
+  // Scroll to bottom when text or logText is updated
   React.useEffect(() => {
     if (textEndRef.current) {
       textEndRef.current.scrollIntoView({ behavior: 'smooth' });
     }
-  }, [text]);
+  }, [text, logText]);
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
@@ -123,14 +123,8 @@ const IndexPage: React.FC<PageProps> = () => {
             </Button>
           </Grid>
           <Grid item xs={12}>
-            {/* <div style={{ height: '300px', overflow: 'auto', border: '1px solid #ccc', padding: '10px' }}>
-              {text.split('\n').map((line, index) => (
-                <div key={index}>{line}</div>
-              ))}
-              <div ref={textEndRef}></div>
-            </div> */}
-            {logText}
-            {text}
+            <div>{logText}{text}</div>
+            <div ref={textEndRef} />
           </Grid>
         </Grid>
         <SpeechRecognitionComponent lang={lang} toggle={toggle} setText={setResultText} />

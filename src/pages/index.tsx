@@ -7,6 +7,10 @@ import Grid from '@mui/material/Grid';
 import IconButton from '@mui/material/IconButton';
 import SEO from "../components/seo"
 import { FaGithub } from 'react-icons/fa';
+import SpeechRecognitionComponent from '../components/SpeechRecognitionComponent';
+
+// JSONファイルの読み込み
+import languages from '../data/languages.json';
 
 // Light用のテーマ
 const lightTheme = createTheme();
@@ -23,10 +27,12 @@ const IndexPage: React.FC<PageProps> = () => {
   const [lang, setLang] = React.useState('zh-CN')
   const [toggle, setToggle] = React.useState(false)
   const [darkMode, setDarkMode] = React.useState(true);
+
   // ダークモード切り替え
   const toggleDarkMode = () => {
     setDarkMode(!darkMode);
   };
+
   const handleChangeLang = (event: SelectChangeEvent) => {
     setLang(event.target.value as string);
   };
@@ -34,40 +40,6 @@ const IndexPage: React.FC<PageProps> = () => {
   const handleChangeToggle = () => {
     setToggle(!toggle);
   };
-
-  React.useEffect(() => {
-    const SpeechRecognition = window.webkitSpeechRecognition || window.SpeechRecognition;
-    if (!SpeechRecognition) {
-      console.error("このブラウザはSpeechRecognitionをサポートしていません。");
-      return;
-    }
-
-    let recognition: any;
-    if (toggle) {      
-      recognition = new SpeechRecognition();
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.lang = lang;
-      
-      recognition.onresult = (event: any) => {
-        const { transcript } = event.results[event.results.length - 1][0];
-        setText(transcript);
-      };
-      
-      recognition.onend = () => {
-        recognition.start();
-      };
-      
-      recognition.start();
-    }
-
-    return () => {
-      if (recognition) {
-        recognition.stop();
-        recognition.onend = null; // イベントハンドラの解除
-      }
-    };
-  }, [lang, toggle]);
 
   return (
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
@@ -84,12 +56,12 @@ const IndexPage: React.FC<PageProps> = () => {
                 value={lang}
                 label="Language"
                 onChange={handleChangeLang}
-              >                
-                <MenuItem value={"zh-CN"}>简体中文</MenuItem>
-                <MenuItem value={"zh-Hant-TW"}>繁體中文</MenuItem>
-                <MenuItem value={"zh-HK"}>广东话</MenuItem>
-                <MenuItem value={"en-US"}>英文</MenuItem>
-                <MenuItem value={"ja"}>日文</MenuItem>
+              >
+                {languages.map(language => (
+                  <MenuItem key={language.code} value={language.code}>
+                    {language.label}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
           </Grid>
@@ -98,7 +70,7 @@ const IndexPage: React.FC<PageProps> = () => {
               {darkMode ? <DarkModeIcon /> : <LightModeIcon />}
             </IconButton>
           </Grid>
-          <Grid item>            
+          <Grid item>
             <IconButton component="a" href="https://github.com/fog-zs/speech-to-text" aria-label="GitHub link" target="_blank" rel="noopener noreferrer">
               <FaGithub />
             </IconButton>
@@ -112,6 +84,7 @@ const IndexPage: React.FC<PageProps> = () => {
             {text}
           </Grid>
         </Grid>
+        <SpeechRecognitionComponent lang={lang} toggle={toggle} setText={setText} />
       </Container>
     </ThemeProvider>
   )

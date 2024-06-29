@@ -34,7 +34,6 @@ const IndexPage: React.FC<PageProps> = () => {
   const [textLength, setTextLength] = React.useState(0);
 
   const setResultText = (newText: string) => {
-    console.log(newText);
     if (checkboxChecked === true) {
       if (newText.length < textLength) {
         setLogText(logText + text + '\n');
@@ -125,9 +124,9 @@ const IndexPage: React.FC<PageProps> = () => {
                 aria-label="Toggle start/stop"
                 sx={{
                   color: '#ffffff',
-                  backgroundColor: '#1976d2',
+                  backgroundColor: toggle ? '#1976d2' : '#757575',
                   '&:hover': {
-                    backgroundColor: '#115293',
+                    backgroundColor: toggle ? '#115293' : '#5f5f5f',
                   }
                 }}
               >

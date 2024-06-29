@@ -29,7 +29,7 @@ const IndexPage: React.FC<PageProps> = () => {
   const [lang, setLang] = React.useState('zh-CN')
   const [toggle, setToggle] = React.useState(true)
   const [darkMode, setDarkMode] = React.useState(true);
-  const [checkboxChecked, setCheckboxChecked] = React.useState(false);
+  const [checkboxChecked, setCheckboxChecked] = React.useState(true);
   const textEndRef = React.useRef<HTMLDivElement | null>(null);
   const [textLength, setTextLength] = React.useState(0);
 

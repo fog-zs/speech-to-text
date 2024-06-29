@@ -75,53 +75,59 @@ const IndexPage: React.FC<PageProps> = () => {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <SEO title="Speech to Text" description="音声をテキストに変換" />
       <CssBaseline />
-      <Container maxWidth="sm" sx={{ pt: 2 }}>
-        <Grid container spacing={2} alignItems="center">
-          <Grid item>
-            <FormControl size="small" fullWidth>
-              <InputLabel id="demo-simple-select-label">語言</InputLabel>
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={lang}
-                label="Language"
-                onChange={handleChangeLang}
-              >
-                {languages.map(language => (
-                  <MenuItem key={language.code} value={language.code}>
-                    {language.label}
-                  </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+      <div style={{ position: 'fixed', width: '100%', zIndex: 1000, backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)', paddingBottom: '20px' }}>
+        <Container maxWidth="sm" sx={{ pt: 2 }}>
+          <Grid container spacing={2} alignItems="center">
+            <Grid item>
+              <FormControl size="small" fullWidth>
+                <InputLabel id="demo-simple-select-label">語言</InputLabel>
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={lang}
+                  label="Language"
+                  onChange={handleChangeLang}
+                >
+                  {languages.map(language => (
+                    <MenuItem key={language.code} value={language.code}>
+                      {language.label}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item>
+              <IconButton onClick={toggleDarkMode} aria-label="Toggle dark mode">
+                {darkMode ? <DarkModeIcon /> : <LightModeIcon />}
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <IconButton component="a" href="https://github.com/fog-zs/speech-to-text" aria-label="GitHub link" target="_blank" rel="noopener noreferrer">
+                <FaGithub />
+              </IconButton>
+            </Grid>
+            <Grid item>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={checkboxChecked}
+                    onChange={handleCheckboxChange}
+                    name="featureCheckbox"
+                  />
+                }
+                label="Log"
+              />
+            </Grid>
+            <Grid item>
+              <Button onClick={handleChangeToggle} variant="contained">
+                {!toggle ? '開始' : '停止'}
+              </Button>
+            </Grid>
           </Grid>
-          <Grid item>
-            <IconButton onClick={toggleDarkMode} aria-label="Toggle dark mode">
-              {darkMode ? <DarkModeIcon /> : <LightModeIcon />}
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <IconButton component="a" href="https://github.com/fog-zs/speech-to-text" aria-label="GitHub link" target="_blank" rel="noopener noreferrer">
-              <FaGithub />
-            </IconButton>
-          </Grid>
-          <Grid item>
-            <FormControlLabel
-              control={
-                <Checkbox
-                  checked={checkboxChecked}
-                  onChange={handleCheckboxChange}
-                  name="featureCheckbox"
-                />
-              }
-              label="Log"
-            />
-          </Grid>
-          <Grid item>
-            <Button onClick={handleChangeToggle} variant="contained">
-              {!toggle ? '開始' : '停止'}
-            </Button>
-          </Grid>
+        </Container>
+      </div>
+      <Container maxWidth="sm" sx={{ pt: 10 }}>
+        <Grid container spacing={2}>
           <Grid item xs={12}>
             <div>{logText}{text}</div>
             <div ref={textEndRef} />

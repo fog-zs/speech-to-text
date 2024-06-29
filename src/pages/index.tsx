@@ -40,6 +40,7 @@ const IndexPage: React.FC<PageProps> = () => {
       }
       setTextLength(newText.length);
     }
+    else setLogText("");
 
     setText(newText);
   }
@@ -75,7 +76,7 @@ const IndexPage: React.FC<PageProps> = () => {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <SEO title="Speech to Text" description="音声をテキストに変換" />
       <CssBaseline />
-      <div style={{ position: 'fixed', width: '100%', zIndex: 1000, backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)', paddingBottom: '20px' }}>
+      <div style={{ position: 'fixed', width: '100%', paddingBottom: '18px', zIndex: 1000, backgroundColor: darkMode ? 'rgba(0, 0, 0, 0.8)' : 'rgba(255, 255, 255, 0.8)' }}>
         <Container maxWidth="sm" sx={{ pt: 2 }}>
           <Grid container spacing={2} alignItems="center">
             <Grid item>
@@ -115,7 +116,7 @@ const IndexPage: React.FC<PageProps> = () => {
                     name="featureCheckbox"
                   />
                 }
-                label="Log"
+                label=""
               />
             </Grid>
             <Grid item>
@@ -136,9 +137,9 @@ const IndexPage: React.FC<PageProps> = () => {
           </Grid>
         </Container>
       </div>
-      <Container maxWidth="sm" sx={{ pt: 10 }}>
+      <Container maxWidth="sm" sx={{ pt: 20, pb: 20, display: 'flex', flexDirection: 'column', justifyContent: 'center', height: 'auto' }}>
         <Grid container spacing={2}>
-          <Grid item xs={12}>
+          <Grid item xs={12} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
             <div>{logText}{text}</div>
             <div ref={textEndRef} />
           </Grid>

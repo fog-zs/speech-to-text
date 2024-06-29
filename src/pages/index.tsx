@@ -1,10 +1,11 @@
 import * as React from "react"
 import type { HeadFC, PageProps } from "gatsby"
-import { Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Switch, createTheme, ThemeProvider, Button, CssBaseline, FormControlLabel, Checkbox } from "@mui/material"
+import { Container, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, Switch, createTheme, ThemeProvider, Button, CssBaseline, FormControlLabel, Checkbox, IconButton } from "@mui/material"
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import LightModeIcon from '@mui/icons-material/LightMode';
 import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
+import PlayArrowIcon from '@mui/icons-material/PlayArrow';
+import StopIcon from '@mui/icons-material/Stop';
 import SEO from "../components/seo"
 import { FaGithub } from 'react-icons/fa';
 import SpeechRecognitionComponent from '../components/SpeechRecognitionComponent';
@@ -119,9 +120,19 @@ const IndexPage: React.FC<PageProps> = () => {
               />
             </Grid>
             <Grid item>
-              <Button onClick={handleChangeToggle} variant="contained">
-                {!toggle ? '開始' : '停止'}
-              </Button>
+              <IconButton
+                onClick={handleChangeToggle}
+                aria-label="Toggle start/stop"
+                sx={{
+                  color: '#ffffff',
+                  backgroundColor: '#1976d2',
+                  '&:hover': {
+                    backgroundColor: '#115293',
+                  }
+                }}
+              >
+                {!toggle ? <PlayArrowIcon /> : <StopIcon />}
+              </IconButton>
             </Grid>
           </Grid>
         </Container>
